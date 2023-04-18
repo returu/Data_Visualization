@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- 引入下载的 echarts.js 文件 -->
+    <script type="text/javascript" src="js/echarts.js"></script>
+    <title>第一个ECharts图表</title>
+</head>
+
+<body>
+    <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+    <div id="container" style="width:800px;height:600px;"></div>
+    <script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('container'));
+
+    // 设置图表的参数
+    var option = {
+        title: {
+            text: "品类销量"
+        },
+
+        tooltip: {},
+
+        // 图例
+        legend: {
+            data: ["2000年销量", "2001年销量", "2002年销量"]
+        },
+
+
+        // x轴
+        xAxis: {
+            type: "category",
+            data: ['品类1', '品类2', '品类3', '品类4', '品类5'],
+        },
+
+        // y轴
+        yAxis: {
+            type: "value",
+        },
+
+
+        // 数据系列
+        series: [{
+            name: "2000年销量",
+            type: "bar",
+            showBackground: true, // 是否显示柱条的背景色
+            label: {
+                show: true, // 是否显示标签
+                position: "inside", // 标签的位置
+                color: "red", // 文字的颜色
+                fontWeight: "bold", // 文字字体的粗细
+                fontFamily: "Microsoft YaHei", // 文字的字体系列
+            },
+            selectedMode: "multiple", // 选中模式的配置，表示是否支持多个选中，默认关闭
+            select: {
+                label: {
+                    formatter: "{b}-{a}-{c}", // 标签内容格式器，支持字符串模板和回调函数两种形式
+                    fontSize:18, // 文字的字体大小
+                    color:"black", // 文字的颜色
+                    backgroundColor:"#FFF", // 文字块背景色
+                    position: "inside"  // 标签的位置
+                },
+                itemStyle: {
+                    color:"red", // 柱条的颜色
+                    borderColor:"#000", // 柱条的描边颜色
+                    borderWidth:3,
+                    opacity:0.6,
+                },
+            },
+            stack:1, // 数据堆叠
+            data: [5, 35, 25, 15, 45],
+        }, {
+            name: "2001年销量",
+            type: "bar",
+            showBackground: true, // 是否显示柱条的背景色
+            label: {
+                show: true, // 是否显示标签
+                position: "inside", // 标签的位置
+                color: "red", // 文字的颜色
+                fontWeight: "bold", // 文字字体的粗细
+                fontFamily: "Microsoft YaHei", // 文字的字体系列
+            },
+            barGap: "0%", // 不同系列的柱间距离
+            barCategoryGap: "50%", // 同一系列的柱间距离
+            stack:1, // 数据堆叠
+            data: [10, 45, 35, 20, 60],
+        }, {
+            name: "2002年销量",
+            type: "bar",
+            showBackground: true, // 是否显示柱条的背景色
+            label: {
+                show: true, // 是否显示标签
+                position: "inside", // 标签的位置
+                color: "red", // 文字的颜色
+                fontWeight: "bold", // 文字字体的粗细
+                fontFamily: "Microsoft YaHei", // 文字的字体系列
+            },
+            barGap: "0%", // 不同系列的柱间距离
+            barCategoryGap: "50%", // 同一系列的柱间距离
+            stack:2, // 数据堆叠
+            data: [15, 40, 40, 25, 50],
+        }]
+    };
+
+
+    // 使用指定的配置项和数据显示图表
+    myChart.setOption(option);
+    </script>
+</body>
+
+</html>

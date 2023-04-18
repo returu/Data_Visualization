@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- 引入下载的 echarts.js 文件 -->
+    <script type="text/javascript" src="js/echarts.js"></script>
+    <title>ECharts图表</title>
+</head>
+
+<body>
+    <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+    <div id="container" style="width:800px;height:500px;"></div>
+    <script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('container'));
+
+    // 设置图表的参数
+    var option = {
+        title: {
+            text: "箱型图",
+            left:"center"
+        },
+
+        tooltip: {},
+
+        // legend: {},
+
+        xAxis: {
+            type: 'category',
+            data: ["类别1", "类别2", "类别3", "类别4", "类别5"]
+        },
+
+        yAxis: {
+            splitArea:{
+                show:true // y轴网格间通过阴影区分显示
+            }
+        },
+
+        // 数据系列
+        series: [{
+            name: "五个统计结果量值",
+            type: "boxplot",
+            data: [
+                [655, 850, 940, 980, 1175],
+                [672.5, 800, 845, 885, 1012.5],
+                [780, 840, 855, 880, 940],
+                [621.25, 767.5, 815, 865, 1011.25],
+                [713.75, 807.5, 810, 870, 963.75]
+            ],
+        }, {
+            name: "异常值",
+            type: "scatter",
+            data: [
+                [0, 650],
+                [2, 620],
+                [2, 720],
+                [2, 950],
+                [2, 970]
+            ]
+        }],
+    };
+
+
+    // 使用指定的配置项和数据显示图表
+    myChart.setOption(option);
+    </script>
+</body>
+
+</html>

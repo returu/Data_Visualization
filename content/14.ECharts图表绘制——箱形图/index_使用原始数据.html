@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- 引入下载的 echarts.js 文件 -->
+    <script type="text/javascript" src="js/echarts.js"></script>
+    <script type="text/javascript" src="js/dataTool.js"></script>
+    <title>ECharts图表</title>
+</head>
+
+<body>
+    <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+    <div id="container" style="width:800px;height:500px;"></div>
+    <script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('container'));
+
+    // 通过echarts.dataTool.prepareBoxplotData()方法对原始数据进行预处理
+    var data = echarts.dataTool.prepareBoxplotData([
+        [850, 740, 900, 1070, 930, 850, 950, 980, 980, 880, 1000, 980, 930, 650, 760, 810, 1000, 1000, 960, 960],
+        [960, 940, 960, 940, 880, 800, 850, 880, 900, 840, 830, 790, 810, 880, 880, 830, 800, 790, 760, 800],
+        [880, 880, 880, 860, 720, 720, 620, 860, 970, 950, 880, 910, 850, 870, 840, 840, 850, 840, 840, 840],
+        [890, 810, 810, 820, 800, 770, 760, 740, 750, 760, 910, 920, 890, 860, 880, 720, 840, 850, 850, 780],
+        [890, 840, 780, 810, 760, 810, 790, 810, 820, 850, 870, 870, 810, 740, 810, 940, 950, 800, 810, 870]
+    ]);
+
+    // 设置图表的参数
+    var option = {
+        title: {
+            text: "箱型图",
+            left: "center"
+        },
+
+        tooltip: {},
+
+        // legend: {},
+
+        xAxis: {
+            type: 'category',
+            data: data.axisData, // 使用data处理后的axisData数据
+            axisLabel:{
+                formatter:"类别{value}" // x轴名称模板
+            }
+        },
+
+        yAxis: {
+            splitArea: {
+                show: true // y轴网格间通过阴影区分显示
+            }
+        },
+
+        // 数据系列
+        series: [{
+            name: "五个统计结果量值",
+            type: "boxplot",
+            data:data.boxData, // 使用data处理后的boxData数据
+        }, {
+            name: "异常值",
+            type: "scatter",
+            data:data.outliers // 使用data处理后的outliers数据
+        }],
+    };
+
+
+    // 使用指定的配置项和数据显示图表
+    myChart.setOption(option);
+    </script>
+</body>
+
+</html>
