@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- 引入下载的 echarts.js 文件 -->
+    <script type="text/javascript" src="js/echarts.js"></script>
+    <title>第一个ECharts图表</title>
+</head>
+
+<body>
+    <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+    <div id="container" style="width:800px;height:600px;"></div>
+    <script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('container'));
+
+    var option = {
+        title: {
+            text: "漏斗图"
+        },
+
+        tooltip: {},
+
+        // 图例
+        legend: { data: ["浏览", "点击", "加购", "下单", "付款"] },
+
+
+        // 数据系列
+        series: [{
+            name: "漏斗图",
+            type: "funnel",
+            min:0, // 指定的数据最小值
+            max:100, // 指定的数据最大值
+            gap:10, // 数据图形间距
+            label:{ // 漏斗图图形上的文本标签样式
+                show:true,
+                position:"inside",
+                formatter:"{b} --> {c}",
+                fontSize:14,
+            },
+            data: [
+                { name: "浏览", value: 100 },
+                { name: "点击", value: 80 },
+                { name: "加购", value: 60 },
+                { name: "下单", value: 40 },
+                { name: "付款", value: 20 },
+            ]
+        }]
+    };
+
+
+    // 使用指定的配置项和数据显示图表
+    myChart.setOption(option);
+    </script>
+</body>
+
+</html>
