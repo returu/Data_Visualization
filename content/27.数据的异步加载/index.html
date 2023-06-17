@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- 引入下载的 echarts.js 文件 -->
+    <script type="text/javascript" src="js/echarts.js"></script>
+    <!-- 引入下载的 jquery.min.js 文件 -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <title>第一个ECharts图表</title>
+</head>
+
+<body>
+    <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+    <div id="container" style="width:800px;height:600px;"></div>
+    <script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('container'));
+
+    $.getJSON('data.json', function (data) {
+        console.log(data)
+
+    // 设置图表的参数
+    var option = {
+        title: {
+            text: "品类销量"
+        },
+
+        // 图例
+        legend: {
+            data: [data[0].year, data[1].year] // 获取第一、二项的year的值
+        },
+
+        // x轴
+        xAxis: {
+            type: "category",
+            data: data[0].categories, // 获取categories的值
+        },
+
+        // y轴
+        yAxis: {
+            type: "value",
+        },
+
+
+        // 数据系列
+        series: [{
+            name: data[0].year, // 获取第一项的year的值
+            type: "bar",
+            showBackground: true,
+            label: {
+                show: true,
+                position: "inside",
+            },
+            data: data[0].value, // 获取第一项的value的值
+        }, {
+            name: data[1].year, // 获取第二项的year的值
+            type: "bar",
+            showBackground: true,
+            label: {
+                show: true,
+                position: "inside",
+            },
+            data: data[1].value, // 获取第二项的value的值
+        }]
+    };
+
+
+    // 使用指定的配置项和数据显示图表
+    myChart.setOption(option);
+    })
+    </script>
+</body>
+
+</html>
