@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- 引入下载的 echarts.js 文件 -->
+    <script type="text/javascript" src="js/echarts.js"></script>
+    <!-- 引入下载的 jquery.min.js 文件 -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <title>ECharts图表</title>
+</head>
+
+<body>
+    <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+    <div id="container" style="width:800px;height:700px;"></div>
+    <script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('container'));
+
+    $.when(
+        $.getScript('js/draggable.js') // 用于实现拖拽功能
+    ).done(function() {
+        draggable.init(
+            $('div[_echarts_instance_]')[0],
+            myChart, {
+                width: 700, // 初始话的图表大小为700*400
+                height: 400,
+            });
+
+        // 设置图表的参数
+        var option = {
+            baseOption: {
+                title: {
+                    text: "响应式自适应图表"
+                },
+
+                legend: {
+                    data: ["品类1", "品类2", "品类3", "品类4", "品类5"]
+                },
+
+
+                // 数据系列
+                series: [{
+                    name: "2000年销量",
+                    type: "pie",
+                    data: [
+                        { value: 5, name: '品类1' },
+                        { value: 35, name: '品类2' },
+                        { value: 25, name: '品类3' },
+                        { value: 15, name: '品类4' },
+                        { value: 45, name: '品类5' }
+                    ]
+                }, {
+                    name: "2001年销量",
+                    type: "pie",
+                    data: [
+                        { value: 10, name: '品类1' },
+                        { value: 45, name: '品类2' },
+                        { value: 35, name: '品类3' },
+                        { value: 20, name: '品类4' },
+                        { value: 60, name: '品类5' }
+                    ]
+                }]
+            },
+
+            // 这里定义了 media query 的逐条规则
+            media: [{
+                // 第一个规则
+                query: { minAspectRatio: 1 }, // 当长宽比大于1
+                option: {
+                    legend: {
+                        right: 'center',
+                        bottom: 0,
+                        orient: 'vertical' // 图例竖直放置
+                    },
+                    series: [{
+                            radius: [30, '40%'],
+                            center: ['25%', '50%']
+                        },
+                        {
+                            radius: [30, '40%'],
+                            center: ['75%', '50%']
+                        }
+                    ]
+                }
+            }, {
+                // 第二个规则
+                query: { maxAspectRatio: 1 }, // 当长宽比小于1
+                option: {
+                    legend: {
+                        right: 'center',
+                        bottom: 0,
+                        orient: 'horizontal' // 图例水平放置
+                    },
+                    series: [{
+                            radius: [30, '40%'],
+                            center: ['50%', '30%']
+                        },
+                        {
+                            radius: [30, '40%'],
+                            center: ['50%', '70%']
+                        }
+                    ]
+                }
+            }, {
+                // 该option没有query选项
+                // 即当以上query都不满足时，执行该option设置
+                option: {
+                    legend: {
+                        right: 'center',
+                        bottom: 0,
+                        orient: 'horizontal'
+                    },
+                    series: [{
+                            radius: [20, '50%'],
+                            center: ['25%', '50%']
+                        },
+                        {
+                            radius: [30, '50%'],
+                            center: ['75%', '50%']
+                        }
+                    ]
+                }
+            }]
+        };
+
+
+        // 使用指定的配置项和数据显示图表
+        myChart.setOption(option);
+    });
+    </script>
+</body>
+
+</html>
