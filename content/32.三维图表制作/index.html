@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- 引入下载的 echarts.js 文件 -->
+    <script type="text/javascript" src="js/echarts.js"></script>
+    <!-- 引入下载的 echarts-gl.js 文件 -->
+    <script type="text/javascript" src="js/echarts-gl.js"></script>
+    <title>ECharts图表</title>
+</head>
+
+<body>
+    <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+    <div id="container" style="width:800px;height:800px;"></div>
+    <script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('container'));
+
+    // 设置图表的参数
+    var option = {
+        title: {
+            text: "三维散点图"
+        },
+
+        legend: {},
+
+        xAxis3D: {}, // 三维笛卡尔坐标系中的 x 轴
+        yAxis3D: {}, // 三维笛卡尔坐标系中的 y 轴
+        zAxis3D: {}, // 三维笛卡尔坐标系中的 z 轴
+
+        // 三维笛卡尔坐标系组件。
+        // 需要和 xAxis3D，yAxis3D，zAxis3D 三个坐标轴组件一起使用。
+        grid3D:{
+            // viewControl用于鼠标的旋转，缩放等视角控制
+            viewControl:{
+                beta:50 // 视角绕 y 轴，即左右旋转的角度
+            },
+            boxWidth:80, // 三维笛卡尔坐标系在三维场景中的宽度
+            boxHeight:80, // 三维笛卡尔坐标系在三维场景中的高度
+            boxDepth:80, // 三维笛卡尔坐标系在三维场景中的深度
+            top:'middle' // 组件的视图离容器上侧的距离
+        },
+
+        // 数据系列
+        series: [{
+            name: "类别1",
+            type: "scatter3D", // 三维散点图
+            symbol: "circle", // 标记的图形,默认为circle
+            symbolSize: 15,
+            data: [
+                [12, 7, 50 ],
+                [2, 4, 25 ],
+                [1, 3, 20 ],
+                [4, 5, 20 ],
+                [6, 7, 35 ],
+                [12, 6, 36 ],
+                [12, 8, 38 ],
+                [5, 5, 44 ]
+            ]
+        },{
+            name: "类别2",
+            type: "scatter3D", // 三维散点图
+            symbol: "diamond", // 标记的图形
+            symbolSize: 15, // 标记的大小
+            data: [
+                [10, 9, 20 ],
+                [8, 8, 30 ],
+                [5, 7, 40 ],
+                [11, 8, 25 ],
+                [14, 7, 24 ],
+            ],
+            itemStyle:{
+                color:"red"
+            }
+        }],
+    };
+
+
+    // 使用指定的配置项和数据显示图表
+    myChart.setOption(option);
+    </script>
+</body>
+
+</html>
