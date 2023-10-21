@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- 引入下载的 echarts.js 文件 -->
+    <script type="text/javascript" src="js/echarts.js"></script>
+    <title>第一个ECharts图表</title>
+</head>
+
+<body>
+    <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+    <div id="container" style="width:800px;height:600px;"></div>
+    <script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('container'));
+
+    // 设置图表的参数
+    var option = {
+        title: {
+            text: "标题"
+        },
+
+        tooltip: {},
+
+        legend: {
+            data: ["2000年销量","2001年销量"]
+        },
+
+
+        // 网格
+        grid:[
+            { left: '7%', top: '7%', width: '38%', height: '38%' }, // 第一个网格
+            { right: '7%', top: '7%', width: '38%', height: '38%' }, // 第二个网格
+
+        ],
+
+ 
+        // x轴
+        xAxis: [{
+            gridIndex:0, // 指定所在的 grid 的索引
+            position:"bottom", // x轴的位置
+            name:"品类", // 坐标轴的名称
+            nameLocation:"center", // 坐标轴名称显示位置
+            nameGap:30, // 坐标轴名称与轴线之间的距离
+            nameTextStyle:{
+                color:"blue", // 坐标轴名称的文字颜色
+                fontWeight:"bold",  // 坐标轴名称的文字字体粗细
+                fontSize:16 , // 坐标轴名称的文字字体大小
+            },
+            data: ['品类1', '品类2', '品类3', '品类4', '品类5'] // 类目数据
+        },{
+            gridIndex:1, // 指定所在的 grid 的索引
+            position:"bottom", // x轴的位置
+            name:"品类", // 坐标轴的名称
+            nameLocation:"center", // 坐标轴名称显示位置
+            nameGap:30, // 坐标轴名称与轴线之间的距离
+            nameTextStyle:{
+                color:"green", // 坐标轴名称的文字颜色
+                fontWeight:"bold",  // 坐标轴名称的文字字体粗细
+                fontSize:16 , // 坐标轴名称的文字字体大小
+            },
+            data: ['品类1', '品类2', '品类3', '品类4', '品类5'] // 类目数据
+        },],
+        
+        // y轴
+        yAxis: [{
+            gridIndex:0, // 指定所在的 grid 的索引
+            position:"left", // y轴的位置
+            name:"销量", // 坐标轴的名称
+            nameLocation:"center", // 坐标轴名称显示位置
+            nameGap:30, // 坐标轴名称与轴线之间的距离
+            nameTextStyle:{
+                color:"blue", // 坐标轴名称的文字颜色
+                fontWeight:"bold",  // 坐标轴名称的文字字体粗细
+                fontSize:16 , // 坐标轴名称的文字字体大小
+            },
+        },{
+            gridIndex:1, // 指定所在的 grid 的索引
+            position:"left", // y轴的位置
+            name:"销量", // 坐标轴的名称
+            nameLocation:"center", // 坐标轴名称显示位置
+            nameGap:30, // 坐标轴名称与轴线之间的距离
+            nameTextStyle:{
+                color:"green", // 坐标轴名称的文字颜色
+                fontWeight:"bold",  // 坐标轴名称的文字字体粗细
+                fontSize:16 , // 坐标轴名称的文字字体大小
+            },
+        }],
+
+        
+        // 数据系列
+        series: [{
+            name: "2000年销量",
+            type: "bar",
+            xAxisIndex: 0, // 使用的 x 轴的 index
+            yAxisIndex: 0, // 使用的 y 轴的 index
+            data: [5, 35, 25, 15, 45]
+        }, {
+            name: "2001年销量",
+            type: "bar",
+            xAxisIndex: 1, // 使用的 x 轴的 index
+            yAxisIndex: 1, // 使用的 y 轴的 index
+            data: [10, 45, 35, 20, 60]
+        }]
+    };
+
+
+    // 使用指定的配置项和数据显示图表
+    myChart.setOption(option);
+    </script>
+</body>
+
+</html>

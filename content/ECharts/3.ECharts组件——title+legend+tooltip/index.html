@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- 引入下载的 echarts.js 文件 -->
+    <script type="text/javascript" src="js/echarts.js"></script>
+    <title>第一个ECharts图表</title>
+</head>
+
+<body>
+    <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+    <div id="container" style="width:800px;height:600px;"></div>
+    <script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('container'));
+
+    // 设置图表的参数
+    var option = {
+        // 标题组件
+        title: {
+            show: true, //是否显示标题组件，默认为true
+            text: "各品类历年销量情况", //主标题文本，支持使用 \n 换行
+            subtext: "2000年+2001年", //副标题文本，支持使用 \n 换行
+            textAlign: "left", //整体（包括 text 和 subtext）的水平对齐方式
+            left: "middle", //title 组件离容器左侧的距离
+        },
+
+        // 提示框组件
+        tooltip: {
+            show:true, //是否显示提示框组件，默认为true
+            trigger:"axis", //触发类型,默认为'item'
+            triggerOn:"click", //提示框触发的条件
+            axisPointer:{type:"shadow"}, //坐标轴指示器配置项
+            formatter:"{b}<br />{a0}为{c0}件<br />{a1}为{c1}件", //提示框浮层内容格式器，支持字符串模板和回调函数两种形式
+            backgroundColor:"rgba(176,58,91,0.7)", //提示框浮层的背景颜色
+            borderColor:"#333", //提示框浮层的边框颜色
+            textStyle:{
+                color:"#fff", //提示框浮层的文本的颜色
+                fontWeight:"bold", //提示框浮层的文本的字体粗细
+                fontFamily:"Microsoft YaHei", //提示框浮层的文本的字体系列
+            },
+        },
+
+        // 图例组件
+        legend: {
+            show:true, //是否显示图例组件，默认为true
+            data: ["2000年销量","2001年销量"], //图例的数据数组
+            left: "right", //图例组件离容器左侧的距离
+            orient:"vertical", //图例列表的布局朝向
+            itemGap:20, //图例每项之间的间隔
+        },
+
+
+        xAxis: {
+            data: ['品类1', '品类2', '品类3', '品类4', '品类5']
+        },
+        yAxis: {},
+        series: [{
+            name: "2000年销量",
+            type: "bar",
+            data: [5, 35, 25, 15, 45]
+        }, {
+            name: "2001年销量",
+            type: "bar",
+            data: [10, 45, 35, 20, 60]
+        }]
+    };
+
+
+    // 使用指定的配置项和数据显示图表
+    myChart.setOption(option);
+    </script>
+</body>
+
+</html>
