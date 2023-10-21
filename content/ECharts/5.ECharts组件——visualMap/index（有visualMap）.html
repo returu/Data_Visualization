@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- 引入下载的 echarts.js 文件 -->
+    <script type="text/javascript" src="js/echarts.js"></script>
+    <title>第一个ECharts图表</title>
+</head>
+
+<body>
+    <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+    <div id="container" style="width:800px;height:600px;"></div>
+    <script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('container'));
+
+    // 设置图表的参数
+    var option = {
+
+        title: {
+            text: "图表", //主标题文本
+        },
+
+        tooltip: {},
+
+
+        legend: {
+            data: ["蒸发量", "温度"], //图例的数据数组
+        },
+
+
+        xAxis: {
+            type: "category",
+            data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
+
+        // 两个y轴
+        yAxis: [{
+            type: "value", // 坐标轴类型
+            name: "Temperature", //坐标轴名称
+            position: "left", // y 轴的位置
+            alignTicks: true, //在多个 x 轴为数值轴的时候，可以开启该配置项自动对齐刻度。只对'value'和'log'类型的轴有效。
+            axisLine: {
+                show: true, // 是否显示坐标轴轴线
+                lineStyle: { color: "#91CC75" }, //坐标轴线线的颜色
+            },
+            axisLabel: {
+                formatter: "{value} ℃" // 刻度标签的内容格式器，支持字符串模板和回调函数两种形式
+            },
+        }, {
+            type: "value", // 坐标轴类型。'value' 为数值轴，适用于连续数据
+            name: "Evaporation", //坐标轴名称
+            position: "right", // y 轴的位置
+            // alignTicks:true,
+            axisLine: {
+                show: true, // 是否显示坐标轴轴线
+                lineStyle: { color: "#5470C6" }, //坐标轴线线的颜色
+            },
+            axisLabel: {
+                formatter: "{value} ml" // 刻度标签的内容格式器，支持字符串模板和回调函数两种形式
+            },
+        }],
+
+
+        // 视觉映射组件
+        // 定义了两个visualMap
+        visualMap: [{
+            type: "continuous", // 连续型视觉映射组件（visualMapContinuous）
+            min: 0, // 指定组件的允许的最小值
+            max: 170, // 指定 组件的允许的最大值
+            range: [10, 100], // 指定手柄对应数值的位置。range 应在 min max 范围内
+            calculable: true, // 是否显示拖拽用的手柄（手柄能拖拽调整选中范围）
+            text: ["High", "蒸发量: Low"], // 两端的文本
+            seriesIndex: 0, // 指定取哪个系列的数据,默认取所有系列
+            inRange: {
+                color: ['#99FFFF', '#0066FF'], // 以数组内的颜色作为基准，形成一种『渐变』的色带，数据映射到这个色带上
+            },
+            outOfRange: { // 定义 在选中范围外 的视觉元素
+                color: "black", // 定义颜色
+                opacity: 0.5, // 定义透明度
+            },
+            orient: "horizontal", // 如何放置 visualMap 组件，水平（'horizontal'）或者竖直（'vertical'）
+            left: "right", // visualMap 组件离容器左侧的距离
+        }, {
+            type: "piecewise", // 分段型视觉映射组件（visualMapContinuous）
+            min: 0, // 指定组件的允许的最小值
+            max: 25, // 指定组件的允许的最大值
+            // splitNumber: 6, // 自动平均切分成几段，默认为5段
+            pieces: [      // 自定义『分段式视觉映射组件（visualMapPiecewise）』的每一段的范围，以及每一段的文字，以及每一段的特别的样式
+                { max: 10 }, 
+                { min: 10, max: 20 }, 
+                { min: 20 }
+                ],
+            text: ["温度:"], // 两端的文本
+            seriesIndex: 1, // 指定取哪个系列的数据,默认取所有系列
+            showLabel:true, // 是否显示每项的文本标签
+            inRange: {
+                color: ['#FF9900', '#FF66FF', 'red'], // 以数组内的颜色作为基准，形成一种『渐变』的色带，数据映射到这个色带上
+                symbolSize: [10, 50],
+            },
+            outOfRange: { // 定义 在选中范围外 的视觉元素
+                color: "black", // 定义颜色
+                opacity: 0.5, // 定义透明度
+            },
+            orient: "horizontal", // 如何放置 visualMap 组件，水平（'horizontal'）或者竖直（'vertical'）
+        }],
+
+
+        series: [{
+            name: "蒸发量",
+            type: "bar",
+            data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
+            yAxisIndex: 1, // 使用的 y 轴的 index，在单个图表实例中存在多个 y轴的时候有用
+        }, {
+            name: "温度",
+            type: "scatter", // 散点图
+            data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2],
+            yAxisIndex: 0, // 使用的 y 轴的 index
+        }]
+    };
+
+
+    // 使用指定的配置项和数据显示图表
+    myChart.setOption(option);
+    </script>
+</body>
+
+</html>

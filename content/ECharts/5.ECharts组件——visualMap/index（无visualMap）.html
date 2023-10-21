@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- 引入下载的 echarts.js 文件 -->
+    <script type="text/javascript" src="js/echarts.js"></script>
+    <title>第一个ECharts图表</title>
+</head>
+
+<body>
+    <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+    <div id="container" style="width:800px;height:600px;"></div>
+    <script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('container'));
+
+    // 设置图表的参数
+    var option = {
+        
+        title: {
+            text: "图表", //主标题文本
+        },
+
+        tooltip: {},
+
+        
+        legend: {
+            data: ["蒸发量", "温度"], //图例的数据数组
+        },
+
+
+        xAxis: {
+            type: "category",
+            data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
+
+        // 两个y轴
+        yAxis: [{
+            type: "value", // 坐标轴类型
+            name: "Temperature", //坐标轴名称
+            position: "left", // y 轴的位置
+            alignTicks: true, //在多个 x 轴为数值轴的时候，可以开启该配置项自动对齐刻度。只对'value'和'log'类型的轴有效。
+            axisLine: {
+                show: true, // 是否显示坐标轴轴线
+                lineStyle: { color: "#91CC75" }, //坐标轴线线的颜色
+            },
+            axisLabel:{
+                formatter:"{value} ℃" // 刻度标签的内容格式器，支持字符串模板和回调函数两种形式
+            },
+        }, {
+            type: "value", // 坐标轴类型。'value' 为数值轴，适用于连续数据
+            name: "Evaporation", //坐标轴名称
+            position: "right", // y 轴的位置
+            // alignTicks:true,
+            axisLine: {
+                show: true, // 是否显示坐标轴轴线
+                lineStyle: { color: "#5470C6" }, //坐标轴线线的颜色
+            },
+            axisLabel:{
+                formatter:"{value} ml" // 刻度标签的内容格式器，支持字符串模板和回调函数两种形式
+            },
+        }],
+
+
+        series: [{
+            name: "蒸发量",
+            type: "bar",
+            data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
+            yAxisIndex: 1, // 使用的 y 轴的 index，在单个图表实例中存在多个 y轴的时候有用
+        }, {
+            name: "温度",
+            type: "scatter",
+            data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2],
+            yAxisIndex: 0, // 使用的 y 轴的 index
+        }]
+    };
+
+
+    // 使用指定的配置项和数据显示图表
+    myChart.setOption(option);
+    </script>
+</body>
+
+</html>
