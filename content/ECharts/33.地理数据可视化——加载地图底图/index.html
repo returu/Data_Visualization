@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html style="height:100%">
+
+<head>
+    <meta charset="utf-8">
+    <!-- 引入下载的 echarts.js 文件 -->
+    <script type="text/javascript" src="js/echarts.js"></script>
+    <!-- 引入下载的 bmap.js 文件 -->
+    <script type="text/javascript" src="js/bmap.js"></script>
+    <!-- 引入百度地图开放平台接口服务 -->
+    <script src="https://api.map.baidu.com/getscript?v=3.0&ak=KOmVjPVUAey1G2E8zNhPiuQ6QiEmAwZu&services=&t=20230614151358"></script>
+    <title>ECharts图表</title>
+</head>
+
+<body style="height: 100%; margin: 0">
+    <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+    <div id="container" style="height:100%"></div>
+    <script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('container'));
+
+    // 设置图表的参数
+    var option = {
+        // bmap组件
+        bmap: {
+            center: [117.135561, 36.678781], // 地图中心点坐标
+            zoom: 8, // 地图层级
+            roma: true, // 可以对地图进行缩放
+            // 地图底图样式设置
+            mapStyle: {
+                styleJson: [{
+                        featureType: 'water',
+                        elementType: 'all',
+                        stylers: {
+                            color: '#d1d1d1'
+                        }
+                    },
+                    {
+                        featureType: 'land',
+                        elementType: 'all',
+                        stylers: {
+                            color: '#f3f3f3'
+                        }
+                    },
+                    {
+                        featureType: 'railway',
+                        elementType: 'all',
+                        stylers: {
+                            visibility: 'off'
+                        }
+                    },
+                    {
+                        featureType: 'highway',
+                        elementType: 'all',
+                        stylers: {
+                            color: '#fdfdfd'
+                        }
+                    },
+                    {
+                        featureType: 'highway',
+                        elementType: 'labels',
+                        stylers: {
+                            visibility: 'off'
+                        }
+                    },
+                    {
+                        featureType: 'arterial',
+                        elementType: 'geometry',
+                        stylers: {
+                            color: '#fefefe'
+                        }
+                    },
+                    {
+                        featureType: 'arterial',
+                        elementType: 'geometry.fill',
+                        stylers: {
+                            color: '#fefefe'
+                        }
+                    },
+                    {
+                        featureType: 'poi',
+                        elementType: 'all',
+                        stylers: {
+                            visibility: 'off'
+                        }
+                    },
+                    {
+                        featureType: 'green',
+                        elementType: 'all',
+                        stylers: {
+                            visibility: 'off'
+                        }
+                    },
+                    {
+                        featureType: 'subway',
+                        elementType: 'all',
+                        stylers: {
+                            visibility: 'off'
+                        }
+                    },
+                    {
+                        featureType: 'manmade',
+                        elementType: 'all',
+                        stylers: {
+                            color: '#d1d1d1'
+                        }
+                    },
+                    {
+                        featureType: 'local',
+                        elementType: 'all',
+                        stylers: {
+                            color: '#d1d1d1'
+                        }
+                    },
+                    {
+                        featureType: 'arterial',
+                        elementType: 'labels',
+                        stylers: {
+                            visibility: 'off'
+                        }
+                    },
+                    {
+                        featureType: 'boundary',
+                        elementType: 'all',
+                        stylers: {
+                            color: '#fefefe'
+                        }
+                    },
+                    {
+                        featureType: 'building',
+                        elementType: 'all',
+                        stylers: {
+                            color: '#d1d1d1'
+                        }
+                    },
+                    {
+                        featureType: 'label',
+                        elementType: 'labels.text.fill',
+                        stylers: {
+                            color: '#999999'
+                        }
+                    }
+                ]
+            }
+        },
+
+        title: {
+            text: "百度地图底图"
+        },
+
+        // 图例
+        legend: {},
+
+        // 数据系列
+        series: [{}],
+    };
+
+
+    // 使用指定的配置项和数据显示图表
+    myChart.setOption(option);
+    </script>
+</body>
+
+</html>

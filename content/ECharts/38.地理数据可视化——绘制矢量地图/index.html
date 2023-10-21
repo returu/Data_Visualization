@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html style="height:100%">
+
+<head>
+    <meta charset="utf-8">
+    <!-- 引入下载的 echarts.js 文件 -->
+    <script type="text/javascript" src="js/echarts.js"></script>
+    <!-- 引入下载的 query.min.js 文件 -->
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <title>ECharts图表</title>
+</head>
+
+<body style="height: 100%; margin: 0">
+    <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+    <div id="container" style="height:100%"></div>
+    <script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('container'));
+
+    // 读取中国省级行政区划的Geo数据 china.json
+    $.getJSON('data/china.json', function(china) {
+        $.getJSON('data/data.json', function(data) {
+            $.getJSON('data/city_points.json', function(city_points) {
+
+                console.log(data)
+                console.log(city_points)
+
+                // 注册绘制中国地图
+                echarts.registerMap('baseMap', china)
+
+                // 设置图表的参数
+                var option = {
+
+                    // 地理坐标系组件
+                    geo: {
+                        map: 'baseMap', //map属性对应注册地图中的地图名称
+                        aspectScale: 0.75, // 用于设置地图的长宽比，当绘制小范围底图时，可能需要将其设置为1
+                        // 图形上的文本标签样式
+                        label: {
+                            // 高亮状态下的标签样式
+                            emphasis: {
+                                show: true,
+                                color: 'red',
+                            }
+                        },
+                        // 地图区域的多边形 图形样式
+                        itemStyle: {
+                            borderWidth: 2,
+                            borderColor: '#808080', // 图形的描边颜色
+                            shadowColor: '#ccc', // 阴影颜色
+                            shadowBlur: 3, // 图形阴影的模糊大小
+                        }
+                    },
+
+                    title: {
+                        text: "北京迁入人口来源地",
+                        textStyle: { color: "#000", fontSize: 30 },
+                        subtext: "数据来源：纯属虚构",
+                        subtextStyle: { color: "#000" },
+                        left: "center"
+                    },
+
+                    // 视觉映射组件
+                    visualMap: [{
+                        max: 100,
+                        inRange: {
+                            color: ['green', '#eac736', '#d94e5d'],
+                            colorAlpha: [0, 1]
+                        },
+                        // 指定取哪个系列的数据
+                        seriesIndex: [0, 1],
+                        show:false
+                    },{
+                        max: 200,
+                        inRange: { color: ['#fff', '#000'] },
+                        // 指定取哪个系列的数据
+                        seriesIndex: 2,
+                        show:false
+                    }],
+
+
+                    // 数据系列
+                    series: [{
+                        type: 'lines', // lines 类型图表
+                        coordinateSystem: 'geo', // 该系列使用的坐标系
+                        data: data,
+                        // 线样式
+                        lineStyle: {
+                            normal: {
+                                // color: '#fff', // #a6c84c
+                                width: 2, // 线宽
+                                curveness: 0.1 // 边的曲度，支持从 0 到 1 的值，值越大曲度越大
+                            }
+                        },
+                        // 线特效的配置
+                        effect: {
+                            show: true, // 是否显示特效
+                            period: 10, // 特效动画的时间，单位为 s
+                            constantSpeed: 100, // 配置特效图形的移动动画是否是固定速度，单位像素/秒
+                            trailLength: 0.7, // 特效尾迹的长度。取从 0 到 1 的值，数值越大尾迹越长
+                            symbolSize: 3 // 特效标记的大小
+                        },
+                    }, {
+                        type: 'effectScatter',
+                        coordinateSystem: 'geo', // 带有涟漪特效动画的散点（气泡）图
+                        // 图形上的文本标签
+                        label: {
+                            // 
+                            emphasis: {
+                                show: true,
+                                position: 'right', // 标签的位置
+                                fontSize: 15,
+                                // 标签内容格式器
+                                // 通过回调函数设置显示内容：城市名称+迁徙量
+                                formatter: function(params) { return params['name'] + ' - ' + params['value'][2] }
+                            }
+                        },
+                        data: city_points,
+                        // 通过回调函数设置标记的大小
+                        // params[2]为每个OD的迁徙量
+                        symbolSize: function(params) { return params[2] ** 0.5 * 1.5 }
+                    }, {
+                        // 地图主要用于地理区域数据的可视化
+                        type: 'map',
+                        // 通过geoIndex指定一个geo组件。这样的话，map和其他series就可以共享一个geo组件了
+                        geoIndex: 0,
+                        data: city_points
+                    }],
+                };
+
+
+                // 使用指定的配置项和数据显示图表
+                myChart.setOption(option);
+            })
+        })
+    })
+    </script>
+</body>
+
+</html>
