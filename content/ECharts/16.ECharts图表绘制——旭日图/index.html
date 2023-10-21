@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- 引入下载的 echarts.js 文件 -->
+    <script type="text/javascript" src="js/echarts.js"></script>
+    <title>ECharts图表</title>
+</head>
+
+<body>
+    <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+    <div id="container" style="width:800px;height:500px;"></div>
+    <script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('container'));
+
+    var data = [{
+        name:"A",
+        children:[{
+            name:"A1",
+            value:15,
+            children:[{
+                name:"A11",
+                value:2
+            },{
+                name:"A12",
+                value:4
+            },{
+                name:"A13",
+                value:5,
+                children:[{
+                    name:"A131",
+                    value:2
+                }]
+            }]
+        },{
+            name:"A2",
+            value:10,
+            children:[{
+                name:"A21",
+                value:5
+            },{
+                name:"A22",
+                value:1
+            }]
+        }]
+    },{
+        name:"B",
+        children:[{
+            name:"B1",
+            children:[{
+                name:"B11",
+                value:1
+            },{
+                name:"B12",
+                value:2
+            }]
+        }]
+    }]
+
+    // 设置图表的参数
+    var option = {
+        title:{
+            text:"旭日图"
+        },
+
+        tooltip:{},
+
+        // 数据系列
+        series: [{
+            type: "sunburst",
+            data:data,
+            radius:[60,"90%"],
+            label: {
+                show: true, // 是否显示标签
+            },
+            itemStyle:{
+                borderRadius:7,
+                borderWidth:2
+            },
+        }],
+    };
+
+
+    // 使用指定的配置项和数据显示图表
+    myChart.setOption(option);
+    </script>
+</body>
+
+</html>
