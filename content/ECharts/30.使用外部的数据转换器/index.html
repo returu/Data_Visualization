@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- 引入下载的 echarts.js 文件 -->
+    <script type="text/javascript" src="js/echarts.js"></script>
+    <!-- 引入下载的 ecStat.js 文件 -->
+    <script type="text/javascript" src="js/ecStat.js"></script>
+    <title>ECharts图表</title>
+</head>
+
+<body>
+    <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+    <div id="container" style="width:1200px;height:900px;"></div>
+    <script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('container'));
+
+    // 注册外部数据转换器
+    echarts.registerTransform(ecStat.transform.histogram);
+
+    // 设置图表的参数
+    var option = {
+        title: {},
+
+        tooltip: {},
+
+        legend: { show: false },
+
+
+        // 在数据集中设置数据
+        dataset: [{
+            // 设置数据
+            source: [
+                [8.3, 143],
+                [8.6, 214],
+                [8.8, 251],
+                [10.5, 26],
+                [10.7, 86],
+                [10.8, 93],
+                [11.5, 176],
+                [11.5, 39],
+                [11.6, 221],
+                [11.6, 188],
+                [11.7, 57],
+                [11.4, 91],
+                [11.4, 191],
+                [11.7, 8],
+                [12.5, 196],
+                [12.9, 177],
+                [12.9, 153],
+                [13.3, 201],
+                [13.7, 199],
+                [13.8, 47],
+                [14.5, 81],
+                [14.7, 98],
+                [14.5, 121],
+                [16.5, 37],
+                [16.3, 12],
+                [17.3, 105],
+                [17.5, 168],
+                [18.9, 84],
+                [18.5, 197],
+                [18.0, 155],
+                [20.6, 125]
+            ]
+        }, {
+            // 引用注册的数据转换器。
+            // 注意，每个外部的数据转换器，都有名空间（如 'ecStat:xxx'，'ecStat' 是名空间）。
+            // 而内置数据转换器（如 'filter', 'sort'）没有名空间。
+            transform: {
+                type: 'ecStat:histogram',
+                print: true,
+                // 这里是此外部数据转换器所需的参数
+                config: { dimensions: [0] }
+            }
+        }, {
+            transform: {
+                type: 'ecStat:histogram',
+                print: true,
+                // 这里是此外部数据转换器所需的参数
+                config: { dimensions: [1] }
+            }
+        }],
+
+        // 设置三个网格
+        grid: [{
+                top: '50%',
+                right: '50%'
+            },
+            {
+                bottom: '52%',
+                right: '50%'
+            },
+            {
+                top: '50%',
+                left: '52%'
+            }
+        ],
+
+        // x轴
+        xAxis: [{
+                scale: true,
+                gridIndex: 0
+            },
+            {
+                type: 'category',
+                scale: true,
+                axisTick: { show: false },
+                axisLabel: { show: false },
+                axisLine: { show: false },
+                gridIndex: 1
+            },
+            {
+                scale: true,
+                gridIndex: 2
+            }
+        ],
+
+        // y轴
+        yAxis: [{
+                gridIndex: 0
+            },
+            {
+                gridIndex: 1
+            },
+            {
+                type: 'category',
+                axisTick: { show: false },
+                axisLabel: { show: false },
+                axisLine: { show: false },
+                gridIndex: 2
+            }
+        ],
+
+        // 在数据系列中设置数据
+        series: [{
+                name: 'origianl scatter',
+                type: 'scatter',
+                xAxisIndex: 0,
+                yAxisIndex: 0,
+                encode: { tooltip: [0, 1] },
+                datasetIndex: 0
+            },
+            {
+                name: 'histogram',
+                type: 'bar',
+                xAxisIndex: 1,
+                yAxisIndex: 1,
+                barWidth: '99.3%',
+                label: {
+                    show: true,
+                    position: 'top'
+                },
+                encode: { x: 0, y: 1},
+                datasetIndex: 1
+            },
+            {
+                name: 'histogram',
+                type: 'bar',
+                xAxisIndex: 2,
+                yAxisIndex: 2,
+                barWidth: '99.3%',
+                label: {
+                    show: true,
+                    position: 'right'
+                },
+                encode: { x: 1, y: 0},
+                datasetIndex: 2
+            }
+        ]
+    };
+
+
+    // 使用指定的配置项和数据显示图表
+    myChart.setOption(option);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- 引入下载的 echarts.js 文件 -->
+    <script type="text/javascript" src="js/echarts.js"></script>
+    <title>ECharts图表</title>
+</head>
+
+<body>
+    <!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+    <div id="container" style="width:800px;height:800px;"></div>
+    <script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('container'));
+
+    // 设置统一的标签样式，以便后续方便重复使用
+    var Label = {
+        show: true, // 是否显示标签
+        position: "inside", // 标签的位置
+        fontWeight: "bold", // 文字字体的粗细
+        fontFamily: "Microsoft YaHei", // 文字的字体系列
+    };
+
+    // 定义图标本地路径
+    var itemIcons = {
+        item1: './images/item1.png',
+        item2: './images/item2.png',
+        item3: './images/item3.png'
+    };
+
+    // 设置图表的参数
+    var option = {
+        title: {
+            text: "各品类历年销量"
+        },
+
+        tooltip: {
+            trigger: 'axis', // 触发类型,axis为坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用
+            axisPointer: { // 坐标轴指示器配置项
+                type: 'shadow' // 指示器类型,shadow为阴影指示器
+            }
+        },
+
+        // 图例
+        legend: {},
+
+        // x轴
+        xAxis: {
+            type: 'value',
+        },
+
+        // y轴
+        yAxis: {
+            type: 'category',
+            data: ['item1', 'item2', 'item3'],
+            // 使用富文本标签
+            axisLabel: {
+                formatter: function(value) {
+                    // return '{value|' + value + '}\n{' + value + '| }'; // 此时文字在上，图片在下
+                    return '{' + value + '| }\n{value|' + value + '}'; // 此时图片在上，文字在下
+                },
+                margin: 20,
+                rich: {
+                    value: {
+                        lineHeight: 30,
+                        align: 'center',
+                        fontWeight: "bold", // 文字字体的粗细
+                        fontFamily: "Microsoft YaHei", // 文字的字体系列
+                    },
+                    item1: {
+                        height: 40,
+                        align: 'center',
+                        backgroundColor: { image: itemIcons.item1 }
+                    },
+                    item2: {
+                        height: 40,
+                        align: 'center',
+                        backgroundColor: { image: itemIcons.item2 }
+                    },
+                    item3: {
+                        height: 40,
+                        align: 'center',
+                        backgroundColor: { image: itemIcons.item3 }
+                    }
+                }
+            },
+        },
+
+        // 数据系列
+        series: [{
+            name: '2000年',
+            type: 'bar',
+            label: Label, // 使用统一的标签样式
+            data: [165, 150, 175]
+        }, {
+            name: '2001年',
+            type: 'bar',
+            label: Label, // 使用统一的标签样式
+            data: [120, 100, 80]
+        }, {
+            name: '2002年',
+            type: 'bar',
+            data: [50, 120, 60],
+            label: Label, // 使用统一的标签样式
+            // 图表标注
+            markPoint: {
+                symbolSize: 1,
+                symbolOffset: [0, '50%'],
+                // 标注的文本
+                label: {
+                    // 标签内容格式器，支持字符串模板和回调函数两种形式
+                    // {b}：数据名、{c}：数据值
+                    formatter: '{style1|2002年销量\n}{style2|{b} }{style3|{c}}',
+                    backgroundColor: 'rgb(242,242,242)',
+                    borderColor: '#aaa',
+                    borderWidth: 1,
+                    borderRadius: 4,
+                    padding: [4, 10],
+                    lineHeight: 26,
+                    shadowBlur: 5,
+                    shadowColor: '#000',
+                    shadowOffsetX: 0,
+                    shadowOffsetY: 1,
+                    position: 'right',
+                    distance: 20,
+                    // 各个文本片段（Text fragment）的样式
+                    rich: {
+                        style1: {
+                            align: 'center',
+                            color: '#fff',
+                            fontSize: 18,
+                            textShadowBlur: 2,
+                            textShadowColor: '#000',
+                            textShadowOffsetX: 0,
+                            textShadowOffsetY: 1,
+                            textBorderColor: '#333',
+                            textBorderWidth: 2
+                        },
+                        style2: {
+                            color: '#333'
+                        },
+                        style3: {
+                            color: '#ff8811',
+                            textBorderColor: '#000',
+                            textBorderWidth: 1,
+                            fontSize: 22
+                        }
+                    }
+                },
+                // 标注的数据数组
+                // 直接用 type 属性标注系列中的最大值，最小值
+                data: [
+                    { type: 'max', name: '最大值: ' },
+                    { type: 'min', name: '最小值: ' },
+                ]
+            }
+        }]
+    };
+
+
+    // 使用指定的配置项和数据显示图表
+    myChart.setOption(option);
+    </script>
+</body>
+
+</html>
